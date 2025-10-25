@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+import flask_login
 
 from . import db
 from . import model
@@ -14,7 +15,25 @@ def signup():
 
 @bp.route("/login")
 def login():
-    return "Login page - to be implemented"
+    return render_template("auth/login.html")
+
+
+@bp.route("/login", methods=["POST"])
+def login_post():
+    email = request.form.get("email")
+    password = request.form.get("password")
+    # Get the user with that email from the database:
+    query = db.select(model.User).where(model.User.email == email)
+    user = db.session.execute(query).scalar_one_or_none()
+    if user and check_password_hash(user.password, password):
+        # The user exists and the password is correct
+        flask_login.login_user(user)
+        return redirect(url_for("main.index"))
+    else:
+        # Wrong email and/or password
+        # Flash a message and redirect to the login form
+        flash("Invalid email or password")
+        return redirect(url_for("auth.login"))
 
 
 @bp.route("/signup", methods=["POST"])
@@ -37,4 +56,10 @@ def signup_post():
     db.session.add(new_user)
     db.session.commit()
     flash("You've successfully signed up!")
-    return redirect(url_for("main.index"))
+    return redirect(url_for("auth.login"))
+
+
+@bp.route("/logout")
+def logout():
+    flask_login.logout_user()
+    return redirect(url_for("auth.login"))

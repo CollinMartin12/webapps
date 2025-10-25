@@ -2,7 +2,7 @@ import datetime
 import dateutil.tz
 
 from flask import Blueprint, render_template
-
+import flask_login
 
 from . import model
 
@@ -11,6 +11,7 @@ bp = Blueprint("main", __name__)
 
 
 @bp.route("/")
+@flask_login.login_required
 def index():
     user = model.User(email="mary@example.com", name="mary")
     posts = [
@@ -53,6 +54,7 @@ def index():
 
 
 @bp.route("/user")
+@flask_login.login_required
 def user_profile():
     # Test user for the profile view
     user = {
@@ -92,6 +94,7 @@ def user_profile():
     return render_template("main/profile.html", user=user, posts=posts)
 
 @bp.route("/post")
+@flask_login.login_required
 def post_view():
     author = model.User(3, "collin@example.com", "Collin")
 

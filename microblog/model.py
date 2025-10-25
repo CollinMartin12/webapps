@@ -4,11 +4,12 @@ from typing import List, Optional
 from sqlalchemy import String, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
+import flask_login
 
 from . import db
 
 
-class User(db.Model):
+class User(flask_login.UserMixin, db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(String(128), unique=True)
     name: Mapped[str] = mapped_column(String(64))
