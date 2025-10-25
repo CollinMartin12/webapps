@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <main class="main-content">
+    <div class="content-area">
+      <header class="header">
+        <h1>Post</h1>
+      </header>
+
+      {# --- Single post --- #}
+      <section class="single-post">
+        {# Render the main post using the shared partial #}
+        {% set post = post %}
+        {% include 'post_template.html' %}
+      </section>
+
+      {# --- Responses --- #}
+      <section class="post-responses">
+        <h2 class="responses-title">Replies</h2>
+        {# Reuse the loop partial but feed it "responses" #}
+        <div class="posts">
+          {% for post in responses %}
+            {% include 'post_template.html' %}
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <aside class="right-sidebar">
+    <div class="search-box">
+      <input type="text" placeholder="Search MyBlog">
+    </div>
+    <div class="trending">
+      <h3>Related</h3>
+      <div class="trending-item"><div class="trend">Productivity</div><div class="tweets-count">2.1K posts</div></div>
+      <div class="trending-item"><div class="trend">Mindset</div><div class="tweets-count">9.8K posts</div></div>
+    </div>
+  </aside>
+</div>
+{% endblock %}

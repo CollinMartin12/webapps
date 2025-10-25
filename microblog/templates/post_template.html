@@ -1,0 +1,25 @@
+<!-- templates/post_template.html -->
+<article class="post">
+    <div class="post-header">
+      <div class="avatar"></div>
+      <div class="user-info">
+        <span class="username">{{ post.user.name }}</span>
+        <span class="handle">@{{ post.user.handle }}</span>
+        <span class="timestamp">· {{ post.timestamp }}</span>
+      </div>
+    </div>
+  
+    <div class="content">
+      {{ post.text }}
+      {% if post.image_url %}
+        <img src="{{ post.image_url }}" alt="{{ post.image_alt or 'Post image' }}">
+      {% endif %}
+    </div>
+  
+    <div class="post-actions">
+      <span class="action">{{ post.replies }} Replies</span>
+      <span class="action">{{ post.retweets }} Retweets</span>
+      <span class="action">{{ post.likes }} Likes</span>
+      <span class="action">{{ post.saves }} Saves</span>
+    </div>
+  </article>

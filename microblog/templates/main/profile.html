@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container"></div>
+  <main class="main-content">
+    <div class="content-area">
+      
+      <!-- ✅ Page title with user name -->
+      <header class="page-header">
+        <h1 class="page-title">{{ user.name }}'s Profile</h1>
+      </header>
+
+      <div class="profile-header">
+        <div class="profile-banner"></div>
+        <div class="profile-info">
+          <div class="profile-avatar"></div>
+          <div class="profile-details">
+            <h2 class="profile-name">{{ user.name }}</h2>
+            <div class="profile-handle">@{{ user.handle }}</div>
+            <div class="profile-bio">
+              {{ user.bio }}
+            </div>
+            <div class="profile-stats">
+              <span><strong>{{ user.stats.following }}</strong> Following</span>
+              <span><strong>{{ user.stats.followers }}</strong> Followers</span>
+              <span><strong>{{ user.stats.posts }}</strong> Posts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Tabs (static placeholders for now) -->
+      <div class="profile-tabs">
+        <a href="#" class="profile-tab active">Posts</a>
+        <a href="#" class="profile-tab">Replies</a>
+        <a href="#" class="profile-tab">Media</a>
+        <a href="#" class="profile-tab">Likes</a>
+      </div>
+
+      <!-- Posts Feed -->
+      <div class="posts-feed">
+        {% include 'posts_template.html' %}
+      </div>
+    </div>
+
+    <aside class="right-sidebar">
+      <div class="search-box">
+        <input type="text" placeholder="Search MyBlog">
+      </div>
+
+      <div class="trending">
+        <h3>Profile Activity</h3>
+        <div class="trending-item">
+          <div class="trend">Posts this month</div>
+          <div class="tweets-count">23 posts</div>
+        </div>
+        <div class="trending-item">
+          <div class="trend">Total likes received</div>
+          <div class="tweets-count">1,247 likes</div>
+        </div>
+        <div class="trending-item">
+          <div class="trend">Most popular post</div>
+          <div class="tweets-count">89 likes</div>
+        </div>
+      </div>
+
+      <div class="trending">
+        <h3>Trending Topics For You</h3>
+        <div class="trending-item">
+          <a href="#" class="trend">#WebDevelopment</a>
+          <div class="tweets-count">12.5K posts</div>
+        </div>
+        <div class="trending-item">
+          <a href="#" class="trend">#JavaScript</a>
+          <div class="tweets-count">8.2K posts</div>
+        </div>
+        <div class="trending-item">
+          <a href="#" class="trend">#React</a>
+          <div class="tweets-count">6.7K posts</div>
+        </div>
+      </div>
+    </aside>
+  </main>
+</div>
+{% endblock %}

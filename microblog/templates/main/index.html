@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container"></div>
+
+  <main class="main-content">
+    <div class="content-area">
+      <header class="header">
+        <h1>For You</h1>
+      </header>
+
+      {# Renders ALL posts using your partials #}
+      {% include 'posts_template.html' %}
+    </div>
+  </main>
+
+  <aside class="right-sidebar">
+    <div class="search-box">
+      <input type="text" placeholder="Search">
+    </div>
+
+    <div class="subscribe">
+      <p>Subscribe to unlock all the features and content</p>
+      <div class="subscribe-icon">
+        <button class="subscribe-button">Subscribe to Premium</button>
+      </div>
+    </div>
+
+    <div class="trending">
+      <div class="trending-item">
+        <p>Thai Boy Band Concerts sell out impact arena</p>
+        <div class="trending-item-count">111 M: News</div>
+      </div>
+      <div class="trending-item">
+        <p>Thai Boy Band Concert ends in tragic accident</p>
+        <div class="trending-item-count">737 k: Entertainment</div>
+      </div>
+      <div class="trending-item">
+        <p>Mariners</p>
+        <div class="trending-item-count">1.5 M: Sports</div>
+      </div>
+    </div>
+  </aside>
+</div>
+{% endblock %}

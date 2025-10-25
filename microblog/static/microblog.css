@@ -1,0 +1,372 @@
+/* Microblog App - Stylesheet */
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: white;
+    color: #14171a;
+    line-height: 1.4;
+}
+
+/* Layout Structure */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: white;
+    border-right: 1px solid #e1e8ed;
+    padding: 20px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1da1f2;
+    margin-bottom: 30px;
+}
+
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav li {
+    margin-bottom: 10px;
+}
+
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #14171a;
+    border-radius: 25px;
+    transition: background-color 0.2s;
+}
+
+.sidebar nav a:hover {
+    background-color: #f7f9fa;
+}
+
+.sidebar nav a.active {
+    background-color: #1da1f2;
+    color: white;
+}
+
+.sidebar nav a i {
+    margin-right: 12px;
+    width: 20px;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: 250px;
+    display: flex;
+}
+
+.content-area {
+    flex: 1;
+    max-width: 600px;
+    border-right: 1px solid #e1e8ed;
+}
+
+.right-sidebar {
+    width: 300px;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header h1 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.header h2 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Post Creation */
+.post-creator {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e1e8ed;
+    padding: 20px;
+}
+
+.post-creator .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #1da1f2;
+    float: left;
+    margin-right: 15px;
+}
+
+.post-creator textarea {
+    width: 100%;
+    border: none;
+    resize: none;
+    font-size: 20px;
+    padding: 10px 0;
+    outline: none;
+    font-family: inherit;
+}
+
+.post-creator .post-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.post-creator .post-button {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.post-creator .post-button:hover {
+    background-color: #0d8bd9;
+}
+
+.post-creator .post-button:disabled {
+    background-color: #aab8c2;
+    cursor: not-allowed;
+}
+
+/* Posts Feed */
+.posts-feed {
+    background-color: #ffffff;
+}
+
+.posts {
+    background-color: #ffffff;
+}
+
+.post {
+    border-bottom: 1px solid #e1e8ed;
+    padding: 20px;
+    transition: background-color 0.2s;
+}
+
+.post:hover {
+    background-color: #f7f9fa;
+}
+
+.post .post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.post .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #1da1f2;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.post .user-info {
+    flex: 1;
+}
+
+.post .username {
+    font-weight: bold;
+    color: #14171a;
+    text-decoration: none;
+}
+
+.post .username:hover {
+    text-decoration: underline;
+}
+
+.post .handle {
+    color: #657786;
+    margin-left: 5px;
+}
+
+.post .timestamp {
+    color: #657786;
+    font-size: 14px;
+}
+
+.post .content {
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.post .content img {
+    max-width: 100%;
+    border-radius: 15px;
+    margin-top: 10px;
+}
+
+.post .post-actions {
+    display: flex;
+    gap: 30px;
+    color: #657786;
+}
+
+.post .post-actions span {
+    cursor: pointer;
+    transition: color 0.2s;
+    font-size: 14px;
+}
+
+.post .post-actions span:hover {
+    color: #1da1f2;
+}
+
+/* Right Sidebar */
+.search-box {
+    background-color: #f7f9fa;
+    border-radius: 25px;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+
+.search-box:focus-within {
+    background-color: white;
+    border-color: #1da1f2;
+}
+
+.search-box input {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+}
+
+.trending {
+    background-color: #f7f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.trending h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.trending-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #e1e8ed;
+}
+
+.trending-item:last-child {
+    border-bottom: none;
+}
+
+.trending-item p {
+    font-weight: bold;
+    color: #14171a;
+    margin-bottom: 5px;
+}
+
+.trending-item-count {
+    color: #657786;
+    font-size: 14px;
+}
+
+.subscribe {
+    background-color: #f7f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.subscribe p {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.subscribe-button {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+
+.subscribe-button:hover {
+    background-color: #0d8bd9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 80px;
+    }
+    
+    .sidebar h1 {
+        display: none;
+    }
+    
+    .sidebar nav a span {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 80px;
+    }
+    
+    .right-sidebar {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .content-area {
+        max-width: none;
+    }
+}
