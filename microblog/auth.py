@@ -12,6 +12,11 @@ def signup():
     return render_template("auth/signup.html")
 
 
+@bp.route("/login")
+def login():
+    return "Login page - to be implemented"
+
+
 @bp.route("/signup", methods=["POST"])
 def signup_post():
     email = request.form.get("email")
@@ -19,14 +24,17 @@ def signup_post():
     password = request.form.get("password")
     # Check that passwords are equal
     if password != request.form.get("password_repeat"):
+        flash("Passwords do not match")
         return redirect(url_for("auth.signup"))
     # Check if the email is already at the database
     query = db.select(model.User).where(model.User.email == email)
     user = db.session.execute(query).scalar_one_or_none()
     if user:
+        flash("Email already registered")
         return redirect(url_for("auth.signup"))
     password_hash = generate_password_hash(password)
     new_user = model.User(email=email, name=username, password=password_hash)
     db.session.add(new_user)
     db.session.commit()
+    flash("Account created successfully!")
     return redirect(url_for("main.index"))

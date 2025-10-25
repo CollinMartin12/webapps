@@ -27,6 +27,8 @@ def create_app(test_config=None):
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///microblog.db"
     # (we import main from here to avoid circular imports in the next lab)
     from . import main
+    from . import auth
 
     app.register_blueprint(main.bp)
+    app.register_blueprint(auth.bp)
     return app
