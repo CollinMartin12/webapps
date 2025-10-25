@@ -12,11 +12,10 @@ bp = Blueprint("main", __name__)
 
 @bp.route("/")
 def index():
-    user = model.User(1, "mary@example.com", "mary")
+    user = model.User(email="mary@example.com", name="mary")
     posts = [
-        model.Post(1, user, "X Works", datetime.datetime.now(dateutil.tz.tzlocal())),
-        model.Post(2, user, "This is what the NFL took from us", datetime.datetime.now(dateutil.tz.tzlocal())),
-        model.Post(3, user, "X is back down again", datetime.datetime.now(dateutil.tz.tzlocal())),
+        model.Post(user=user, text="Test post", timestamp=datetime.datetime.now(dateutil.tz.tzlocal())),
+        model.Post(user=user, text="Another post", timestamp=datetime.datetime.now(dateutil.tz.tzlocal())),
     ]
     # if your Post supports extra fields, you can enrich them in Jinja context
     # by mapping to dicts before render_template. Otherwise keep it simple.
