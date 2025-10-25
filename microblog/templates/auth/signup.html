@@ -5,13 +5,9 @@
     <div class="signup-container">
         <h2>Sign Up</h2>
         {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul class="flash-messages">
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+            {% for message in messages %}
+                <div class="notification">{{ message }}</div>
+            {% endfor %}
         {% endwith %}
         <form method="POST" action="{{ url_for('auth.signup_post') }}">
             <div class="form-group">

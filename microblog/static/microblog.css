@@ -416,18 +416,13 @@ body {
     background-color: #0d8bd9;
 }
 
-.flash-messages {
-    list-style: none;
+.notification {
     padding: 15px;
     margin-bottom: 20px;
     background-color: #f7f9fa;
     border-radius: 8px;
     border-left: 4px solid #1da1f2;
-}
-
-.flash-messages li {
     color: #14171a;
-    margin-bottom: 5px;
 }
 
 .signup-container p {

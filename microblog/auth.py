@@ -24,17 +24,17 @@ def signup_post():
     password = request.form.get("password")
     # Check that passwords are equal
     if password != request.form.get("password_repeat"):
-        flash("Passwords do not match")
+        flash("Sorry, passwords are different")
         return redirect(url_for("auth.signup"))
     # Check if the email is already at the database
     query = db.select(model.User).where(model.User.email == email)
     user = db.session.execute(query).scalar_one_or_none()
     if user:
-        flash("Email already registered")
+        flash("Sorry, the email you provided is already registered")
         return redirect(url_for("auth.signup"))
     password_hash = generate_password_hash(password)
     new_user = model.User(email=email, name=username, password=password_hash)
     db.session.add(new_user)
     db.session.commit()
-    flash("Account created successfully!")
+    flash("You've successfully signed up!")
     return redirect(url_for("main.index"))
