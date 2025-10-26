@@ -3,21 +3,25 @@
     <div class="post-header">
       <div class="avatar"></div>
       <div class="user-info">
-        <span class="username">{{ post.user.name }}</span>
+        <span class="username"><a href="{{ url_for('main.user_profile', user_id=post.user.id) }}" style="text-decoration: none; color: inherit;">{{ post.user.name }}</a></span>
         <span class="handle">@{{ post.user.handle }}</span>
         <span class="timestamp">· {{ post.timestamp }}</span>
       </div>
     </div>
   
     <div class="content">
-      {{ post.text }}
-      {% if post.image_url %}
-        <img src="{{ post.image_url }}" alt="{{ post.image_alt or 'Post image' }}">
-      {% endif %}
+      <a href="{{ url_for('main.post', post_id=post.id) }}" style="text-decoration: none; color: inherit;">
+        {{ post.text }}
+        {% if post.image_url %}
+          <img src="{{ post.image_url }}" alt="{{ post.image_alt or 'Post image' }}">
+        {% endif %}
+      </a>
     </div>
   
     <div class="post-actions">
-      <span class="action">{{ post.replies }} Replies</span>
+      <a href="{{ url_for('main.post', post_id=post.id) }}" style="text-decoration: none; color: inherit;">
+        <span class="action">{{ post.replies }} Replies</span>
+      </a>
       <span class="action">{{ post.retweets }} Retweets</span>
       <span class="action">{{ post.likes }} Likes</span>
       <span class="action">{{ post.saves }} Saves</span>

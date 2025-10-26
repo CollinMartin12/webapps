@@ -26,44 +26,17 @@ def new_post():
     return redirect(url_for("main.post", post_id=post.id))
 
 
-@bp.route("/user")
+@bp.route("/user/<int:user_id>")
 @flask_login.login_required
-def user_profile():
-    # Test user for the profile view
-    user = {
-        "name": "John Doe",
-        "handle": "johndoe",
-        "bio": (
-            "Web developer passionate about creating amazing user experiences. "
-            "Love coding, coffee, and sharing knowledge with the community. "
-            "Always learning something new! 🚀"
-        ),
-        "stats": {"following": 156, "followers": 1234, "posts": 89},
-    }
-
-    # Two example posts by this user
-    posts = [
-        {
-            "user": {"name": "John Doe", "handle": "johndoe"},
-            "timestamp": "1h",
-            "text": (
-                "Just deployed my latest project! It's a React app with TypeScript and Tailwind CSS. "
-                "The development experience has been amazing. Check it out! #React #TypeScript #TailwindCSS"
-            ),
-            "image_url": "",
-            "replies": "15", "retweets": "120", "likes": "980", "saves": "44",
-        },
-        {
-            "user": {"name": "John Doe", "handle": "johndoe"},
-            "timestamp": "3h",
-            "text": (
-                'Reading "Clean Code" by Robert Martin. Every developer should read it at least once.'
-            ),
-            "image_url": "",
-            "replies": "9", "retweets": "32", "likes": "210", "saves": "11",
-        },
-    ]
-
+def user_profile(user_id):
+    user = db.session.get(model.User, user_id)
+    if not user:
+        abort(404, "User id {} doesn't exist.".format(user_id))
+    
+    # Get all posts by this user, sorted by most recent first
+    query = db.select(model.Post).where(model.Post.user_id == user_id).order_by(model.Post.timestamp.desc())
+    posts = db.session.execute(query).scalars().all()
+    
     return render_template("main/profile.html", user=user, posts=posts)
 
 @bp.route("/post/<int:post_id>")

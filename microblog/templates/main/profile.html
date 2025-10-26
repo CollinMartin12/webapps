@@ -16,14 +16,9 @@
           <div class="profile-avatar"></div>
           <div class="profile-details">
             <h2 class="profile-name">{{ user.name }}</h2>
-            <div class="profile-handle">@{{ user.handle }}</div>
-            <div class="profile-bio">
-              {{ user.bio }}
-            </div>
+            <div class="profile-email">{{ user.email }}</div>
             <div class="profile-stats">
-              <span><strong>{{ user.stats.following }}</strong> Following</span>
-              <span><strong>{{ user.stats.followers }}</strong> Followers</span>
-              <span><strong>{{ user.stats.posts }}</strong> Posts</span>
+              <span><strong>{{ posts|length }}</strong> Posts</span>
             </div>
           </div>
         </div>
