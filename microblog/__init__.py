@@ -30,7 +30,6 @@ def create_app(test_config=None):
     login_manager.init_app(app)
     
     # Register blueprints
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///microblog.db"
     # (we import main from here to avoid circular imports in the next lab)
     from . import main
     from . import auth

@@ -9,6 +9,14 @@
         <h1>For You</h1>
       </header>
 
+      {# Form for creating new posts #}
+      <div class="post-form-container">
+        <form method="POST" action="{{ url_for('main.new_post') }}">
+          <textarea name="text" placeholder="What's happening?" required></textarea>
+          <button type="submit" class="btn-primary">Post</button>
+        </form>
+      </div>
+
       {# Renders ALL posts using your partials #}
       {% include 'posts_template.html' %}
     </div>

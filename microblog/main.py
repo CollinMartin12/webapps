@@ -1,10 +1,8 @@
-import datetime
-import dateutil.tz
-
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, redirect, url_for, abort
 import flask_login
 
 from . import model
+from . import db
 
 bp = Blueprint("main", __name__)
 
@@ -13,44 +11,19 @@ bp = Blueprint("main", __name__)
 @bp.route("/")
 @flask_login.login_required
 def index():
-    user = model.User(email="mary@example.com", name="mary")
-    posts = [
-        model.Post(user=user, text="Test post", timestamp=datetime.datetime.now(dateutil.tz.tzlocal())),
-        model.Post(user=user, text="Another post", timestamp=datetime.datetime.now(dateutil.tz.tzlocal())),
-    ]
-    # if your Post supports extra fields, you can enrich them in Jinja context
-    # by mapping to dicts before render_template. Otherwise keep it simple.
-    return render_template("main/index.html", posts=[
-        {
-            "user": {"name": "Elon Musk", "handle": "elonmusk"},
-            "avatar_url": "",
-            "timestamp": "7h",
-            "text": "X Works",
-            "image_url": "",
-            "replies": "398", "retweets": "4.1K", "likes": "11.2K", "saves": "11.2K",
-            "is_reply": False
-        },
-        {
-            "user": {"name": "Barstool Sports", "handle": "barstoolsports"},
-            "avatar_url": "",
-            "timestamp": "Oct 19",
-            "text": "This is what the NFL took from us",
-            "image_url": "https://pbs.twimg.com/media/F_P1E6wWkAAKZCX.jpg",
-            "replies": "398", "retweets": "4.1K", "likes": "11.2K", "saves": "11.2K",
-            "is_reply": False
-        },
-        {
-            "user": {"name": "GQ", "handle": "GQ"},
-            "avatar_url": "",
-            "timestamp": "6h",
-            "text": "",
-            "image_url": "",
-            "replies": "398", "retweets": "4.1K", "likes": "11.2K", "saves": "11.2K",
-            "is_reply": True,
-            "replying_to": "elonmusk",
-            "reply_text": "X is back down again"
-        },
-    ])
+    query = db.select(model.Post).order_by(model.Post.timestamp.desc()).limit(10)
+    posts = db.session.execute(query).scalars().all()
+    return render_template("main/index.html", posts=posts)
+
+
+@bp.route("/new_post", methods=["POST"])
+@flask_login.login_required
+def new_post():
+    text = request.form.get("text")
+    post = model.Post(user=flask_login.current_user, text=text)
+    db.session.add(post)
+    db.session.commit()
+    return redirect(url_for("main.post", post_id=post.id))
 
 
 @bp.route("/user")
@@ -93,37 +66,15 @@ def user_profile():
 
     return render_template("main/profile.html", user=user, posts=posts)
 
-@bp.route("/post")
+@bp.route("/post/<int:post_id>")
 @flask_login.login_required
-def post_view():
-    author = model.User(3, "collin@example.com", "Collin")
-
-    # The main post
-    post = {
-        "id": 101,
-        "user": {"name": author.name, "handle": "celo2759"},
-        "timestamp": "6h",
-        "text": "certified bag fumbler",
-        "image_url": "",   # leave empty if no image
-        "replies": "12", "retweets": "4", "likes": "37", "saves": "2",
-    }
-
-    # A couple of response posts
-    responses = [
-        {
-            "user": {"name": "Alice", "handle": "alice"},
-            "timestamp": "5h",
-            "text": "lol same 😅",
-            "image_url": "",
-            "replies": "1", "retweets": "0", "likes": "5", "saves": "0",
-        },
-        {
-            "user": {"name": "Bob", "handle": "bob"},
-            "timestamp": "4h",
-            "text": "Tomorrow’s another shot. Keep going! 💪",
-            "image_url": "",
-            "replies": "0", "retweets": "1", "likes": "12", "saves": "1",
-        },
-    ]
-
+def post(post_id):
+    post = db.session.get(model.Post, post_id)
+    if not post:
+        abort(404, "Post id {} doesn't exist.".format(post_id))
+    
+    # Get responses to this post
+    query = db.select(model.Post).where(model.Post.response_to_id == post_id)
+    responses = db.session.execute(query).scalars().all()
+    
     return render_template("main/post.html", post=post, responses=responses)
