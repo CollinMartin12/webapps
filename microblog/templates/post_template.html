@@ -17,7 +17,9 @@
         {% endif %}
       </a>
     </div>
-  
+    <div>
+      <input type="hidden" name="response_to" value="{{ post.id }}">
+    </div> 
     <div class="post-actions">
       <a href="{{ url_for('main.post', post_id=post.id) }}" style="text-decoration: none; color: inherit;">
         <span class="action">{{ post.replies }} Replies</span>

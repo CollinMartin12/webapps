@@ -6,8 +6,6 @@ from . import db
 
 bp = Blueprint("main", __name__)
 
-
-
 @bp.route("/")
 @flask_login.login_required
 def index():
