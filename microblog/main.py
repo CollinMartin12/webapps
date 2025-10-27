@@ -18,10 +18,24 @@ def index():
 @flask_login.login_required
 def new_post():
     text = request.form.get("text")
-    post = model.Post(user=flask_login.current_user, text=text)
+
+    response_to = request.form.get("response_to")
+    if response_to:
+        response_to = db.session.get(model.Post, response_to)
+        if not response_to:
+            abort(404, "Response to post id {} doesn't exist.".format(response_to))
+        post = model.Post(user=flask_login.current_user, text=text, response_to=response_to)
+    
+    else:
+        post = model.Post(user=flask_login.current_user, text=text)
+
     db.session.add(post)
     db.session.commit()
-    return redirect(url_for("main.post", post_id=post.id))
+
+    if response_to:
+        return redirect(url_for("main.post", post_id=response_to.id))
+    else:
+        return redirect(url_for("main.post", post_id=post.id))
 
 
 @bp.route("/user/<int:user_id>")
