@@ -27,7 +27,8 @@
       </section>
       <section class = "response-form">
         <form method="POST" action="{{ url_for('main.new_post') }}">
-        <input type="hidden" name="response_to" value="{{ post.id }}">
+          <textarea name="text" placeholder="What's happening?" required></textarea>
+          <input type="hidden" name="response_to" value="{{ post.id }}">
         <button type="submit" class="btn-primary">Reply</button>
         </form>
       </section>  
