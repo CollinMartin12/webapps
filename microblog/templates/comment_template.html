@@ -1,0 +1,37 @@
+<!-- templates/post_template.html -->
+<article class="comment">
+    <div class="post-header">
+      <div class="avatar"></div>
+      <div class="user-info">
+        <span class="username"><a href="{{ url_for('main.user_profile', user_id=post.user.id) }}" style="text-decoration: none; color: inherit;">{{ post.user.name }}</a></span>
+        <span class="handle">@{{ response.user.handle }}</span>
+        <span class="timestamp">· {{ response.timestamp }}</span>
+      </div>
+    </div>
+  
+    <div class="content">
+      <a href="{{ url_for('main.post', post_id=post.id) }}" style="text-decoration: none; color: inherit;">
+        {{ response.text }}
+        {% if response.image_url %}
+          <img src="{{ response.image_url }}" alt="{{ response.image_alt or 'Post image' }}">
+        {% endif %}
+      </a>
+    </div>
+    <!-- <div>
+      <input type="hidden" name="response_to" value="{{ post.id }}">
+    </div> 
+    
+    <div class="post-actions">
+      <a href="{{ url_for('main.post', post_id=post.id) }}" style="text-decoration: none; color: inherit;">
+        <span class="action">{{ post.replies }} Replies</span>
+      </a>
+      <span class="action">{{ post.retweets }} Retweets</span>
+      <span class="action">{{ post.likes }} Likes</span>
+      <span class="action">{{ post.saves }} Saves</span>
+    </div>
+    <div>
+      {% for post in post.responses %}
+        {% include 'post_template.html' %}
+      {% endfor %}
+    </div>  -->
+  </article>

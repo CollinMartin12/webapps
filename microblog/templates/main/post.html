@@ -1,49 +1,29 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<div class="container">
-  <main class="main-content">
-    <div class="content-area">
-      <header class="header">
-        <h1>Post</h1>
-      </header>
-
-      {# --- Single post --- #}
-      <section class="single-post">
-        {# Render the main post using the shared partial #}
-        {% set post = post %}
-        {% include 'post_template.html' %}
-      </section>
-
-      {# --- Responses --- #}
-      <section class="post-responses">
-        <h2 class="responses-title">Replies</h2>
-        {# Reuse the loop partial but feed it "responses" #}
-        <div class="posts">
-          {% for post in responses %}
-            {% include 'post_template.html' %}
-          {% endfor %}
-        </div>
-      </section>
-      <section class = "response-form">
-        <form method="POST" action="{{ url_for('main.new_post') }}">
-          <textarea name="text" placeholder="What's happening?" required></textarea>
-          <input type="hidden" name="response_to" value="{{ post.id }}">
-        <button type="submit" class="btn-primary">Reply</button>
-        </form>
-      </section>  
+<!-- templates/post_template.html -->
+<article class="post">
+  <div class="post-header">
+    <div class="avatar"></div>
+    <div class="user-info">
+      <span class="username"><a href="{{ url_for('main.user_profile', user_id=post.user.id) }}" style="text-decoration: none; color: inherit;">{{ post.user.name }}</a></span>
+      <span class="handle">@{{ post.user.handle }}</span>
+      <span class="timestamp">· {{ post.timestamp }}</span>
     </div>
-  </main>
+  </div>
 
-  <aside class="right-sidebar">
-    <div class="search-box">
-      <input type="text" placeholder="Search MyBlog">
-    </div>
-    <div class="trending">
-      <h3>Related</h3>
-      <div class="trending-item"><div class="trend">Productivity</div><div class="tweets-count">2.1K posts</div></div>
-      <div class="trending-item"><div class="trend">Mindset</div><div class="tweets-count">9.8K posts</div></div>
-    </div>
-  </aside>
-</div>
-{% endblock %}
+  <div class="content">
+    <a href="{{ url_for('main.post', post_id=post.id) }}" style="text-decoration: none; color: inherit;">
+      {{ post.text }}
+      {% if post.image_url %}
+        <img src="{{ post.image_url }}" alt="{{ post.image_alt or 'Post image' }}">
+      {% endif %}
+    </a>
+  </div>
+  
+  <div class="post-actions">
+    <a href="{{ url_for('main.post', post_id=post.id) }}" style="text-decoration: none; color: inherit;">
+      <span class="action">{{ post.replies }} Replies</span>
+    </a>
+    <span class="action">{{ post.retweets }} Retweets</span>
+    <span class="action">{{ post.likes }} Likes</span>
+    <span class="action">{{ post.saves }} Saves</span>
+  </div>
+</article>
