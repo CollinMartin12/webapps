@@ -30,7 +30,51 @@
         <a href="#" class="profile-tab">Replies</a>
         <a href="#" class="profile-tab">Media</a>
         <a href="#" class="profile-tab">Likes</a>
+        {% if follow_button == "follow" %}
+        <form action="{{ url_for('main.follow', user_id=user.id) }}" method="post">
+            <input type="submit" value="Follow">
+        </form>
+        {% elif follow_button == "unfollow" %}
+        <form action="{{ url_for('main.unfollow', user_id=user.id) }}" method="post">
+            <input type="submit" value="Unfollow">
+        </form>
+        {% endif %}
       </div>
+      <div class="following-block">
+        <h3 style="margin-bottom: .5rem;">
+          Following ({{ user.following|length }})
+        </h3>
+        {% if user.following %}
+          <ul style="list-style:none; padding-left:0; margin:0;">
+            {% for u in user.following %}
+              <li style="margin:.25rem 0;">
+                <a href="{{ url_for('main.user_profile', user_id=u.id) }}">
+                  {{ u.name }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <div class="empty">Not following anyone yet.</div>
+        {% endif %}
+    <div class="followers-block">
+      <h3 style="margin-bottom: .5rem;">
+        Followers ({{ user.followers|length }})
+      </h3>
+      {% if user.followers %}
+        <ul style="list-style:none; padding-left:0; margin:0;">
+          {% for u in user.followers %}
+            <li style="margin:.25rem 0;">
+              <a href="{{ url_for('main.user_profile', user_id=u.id) }}">
+                {{ u.name }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="empty">No followers yet.</div>
+      {% endif %}
+    </div>
 
       <!-- Posts Feed -->
       <div class="posts-feed">

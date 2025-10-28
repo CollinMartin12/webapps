@@ -16,7 +16,12 @@
           <button type="submit" class="btn-primary">Post</button>
         </form>
       </div>
-      {# Renders ALL posts using your partials #}
+      <h2>Latest posts from the people you follow</h2>
+      {% set posts = following_posts %}
+      {% include 'posts_template.html' %}
+      
+      <h2>Latest posts</h2>
+      {% set posts = latest_posts %}
       {% include 'posts_template.html' %}
     </div>
   </main>

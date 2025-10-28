@@ -10,12 +10,22 @@
     </div>
   
     <div class="content">
-      <a href="{{ url_for('main.post', post_id=post.id) }}" style="text-decoration: none; color: inherit;">
+      {% if post.response_to is none %}
+        <a href="{{ url_for('main.post', post_id=post.id) }}" style="text-decoration: none; color: inherit;">
+          {{ post.text }}
+          {% if post.image_url %}
+            <img src="{{ post.image_url }}" alt="{{ post.image_alt or 'Post image' }}">
+          {% endif %}
+        </a>
+     {% else %} 
         {{ post.text }}
         {% if post.image_url %}
           <img src="{{ post.image_url }}" alt="{{ post.image_alt or 'Post image' }}">
         {% endif %}
-      </a>
+     {% endif %} 
+
+          
+
     </div>
     <div>
       <input type="hidden" name="response_to" value="{{ post.id }}">
@@ -29,9 +39,15 @@
       <span class="action">{{ post.likes }} Likes</span>
       <span class="action">{{ post.saves }} Saves</span>
     </div>
-    <div>
-      {% for post in post.responses %}
-        {% include 'post_template.html' %}
+    {% if post.responses %}
+    <div class="replies">
+      {% for reply in post.responses %}
+        {% if reply.id != post.id %}
+          {% with post=reply %}
+            {% include 'post_template.html' %}
+          {% endwith %}
+        {% endif %}
       {% endfor %}
-    </div> 
+    </div>
+  {% endif %}
   </article>
